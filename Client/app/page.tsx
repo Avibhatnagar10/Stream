@@ -159,7 +159,7 @@ const HomePage = () => {
         <div className="mt-10 text-lg text-gray-300 max-w-4xl mx-auto text-center">
           <p>
             Leverage the power of live interaction to create memorable
-            experiences. Whether you're streaming a concert, a gaming session,
+            experiences. Whether you are streaming a concert, a gaming session,
             or a corporate event, the right tools can transform passive viewers
             into active participants.
           </p>
@@ -272,7 +272,7 @@ const HomePage = () => {
           <p className="text-lg mb-4">
             StreamForge empowers you to easily start your live stream, engage
             with your audience, and record your sessions effortlessly. Whether
-            you're a new streamer or an experienced one, our platform offers
+            you are a new streamer or an experienced one, our platform offers
             seamless tools to take your streaming experience to the next level.
           </p>
           <p className="text-lg">
