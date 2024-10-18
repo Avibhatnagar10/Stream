@@ -24,7 +24,7 @@ const HomePage = () => {
   const [popupVisible, setPopupVisible] = useState(false);
   const [welcomeMessage, setWelcomeMessage] = useState(""); // To store welcome message
   const [margindo, setMargindo] = useState("mt-16");
-  const router = useRouter(); // Initialize the router
+ 
 
   // Check user authentication status
   useEffect(() => {
