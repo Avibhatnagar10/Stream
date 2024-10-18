@@ -199,7 +199,7 @@ const Page = () => {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 animate-fade-in">
           <div className="bg-gray-800 text-center p-6 rounded-lg shadow-lg">
             <h2 className="text-xl font-bold text-white animate-pulse">
-              You're live in {countdown} secs!
+              You are live in {countdown} secs!
             </h2>
           </div>
         </div>
