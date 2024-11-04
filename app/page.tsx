@@ -16,6 +16,7 @@ import { auth } from "./firebaseConfig";
 import { useRouter } from "next/navigation";
 import Loader from "./components/Loader";
 import Contact from "./contact/page";
+import LottieAnimation from './components/LottieAnimation';
 
 const HomePage = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -25,7 +26,7 @@ const HomePage = () => {
   const [welcomeMessage, setWelcomeMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [overflow, setOverflow] = useState("hidden");
-  
+
   // Check user authentication status
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -52,23 +53,22 @@ const HomePage = () => {
   }, []);
 
   // Handle the "Get Started" button click
-const handleGetStartedClick = () => {
-  console.log("Get Started clicked", user); // Add this line
-  if (!user) {
-    setPopupVisible(true);
-    setShowPopup(true);
-  } else {
-    setShowCards(true);
-    setOverflow("auto");
-    setTimeout(() => {
-      const cardsSection = document.getElementById("cards-section");
-      if (cardsSection) {
-        cardsSection.scrollIntoView({ behavior: "smooth" });
-      }
-    }, 100);
-  }
-};
-
+  const handleGetStartedClick = () => {
+    console.log("Get Started clicked", user); // Add this line
+    if (!user) {
+      setPopupVisible(true);
+      setShowPopup(true);
+    } else {
+      setShowCards(true);
+      setOverflow("auto");
+      setTimeout(() => {
+        const cardsSection = document.getElementById("cards-section");
+        if (cardsSection) {
+          cardsSection.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
+    }
+  };
 
   // Handle sign in with Google
   const handleSignIn = () => {
@@ -92,7 +92,7 @@ const handleGetStartedClick = () => {
   // Handle recorded stream and live stream button clicks
   const handleStreamAction = (path: string, alertMessage: string) => {
     if (user) {
-      window.open(path, "_blank");
+      window.open(path);
     } else {
       alert(alertMessage);
       setPopupVisible(true);
@@ -101,11 +101,7 @@ const handleGetStartedClick = () => {
   };
 
   return (
-    <div
-      className={` h-screen overflow-y-auto text-white hide-scrollbar `}
-
-    >
-      
+    <div className={` h-screen overflow-y-auto text-white hide-scrollbar `}>
       <Navbar />
       {loading ? (
         <div className="flex items-center justify-center w-full h-full">
@@ -174,7 +170,7 @@ const handleGetStartedClick = () => {
                   className="relative mt-4 px-6 py-3 text-lg font-semibold text-[rgb(71,171,248)] border-2 border-[rgb(46,136,254)] rounded-full bg-transparent transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] overflow-hidden group hover:text-[#212121] hover:scale-110 hover:shadow-[0_0_20px_rgba(193,163,98,0.4)] active:scale-100"
                   onClick={() =>
                     handleStreamAction(
-                      "/livestreampage",
+                      "/LivePage",
                       "Please sign in to start a live stream."
                     )
                   }
@@ -189,22 +185,34 @@ const handleGetStartedClick = () => {
           {/* Parallax and remaining sections */}
           <div className="relative w-full h-screen">
             {/* Parallax Background Elements */}
-            <div className="absolute top-0 left-0 w-64 h-64 bg-blue-500 rounded-full parallax-1"></div>
-            <div className="absolute top-10 right-10 w-40 h-40 bg-indigo-500 rounded-full parallax-2"></div>
-            <div className="absolute bottom-20 left-20 w-48 h-48 bg-pink-500 rounded-full parallax-3"></div>
+            <div className="absolute top-0 left-0 w-48 h-48 bg-blue-500 rounded-full parallax-1 animate-mic-bounce transform-gpu"></div>
+            <div className="absolute top-10 right-10 w-40 h-40 bg-indigo-500 rounded-full parallax-2 animate-pulse"></div>
+            <div className="absolute bottom-20 left-20 w-48 h-48 bg-pink-500 rounded-full parallax-3 animate-pulse"></div>
+            <div className="absolute bottom-1/6 right-1/4 w-28 h-28 bg-gradient-to-tl from-pink-500 to-orange-500 rounded-full flex justify-center items-center animate-camera-move transform-gpu"></div>
+            <div className="absolute bottom-1 right-28 w-48 h-48 bg-gradient-to-tl from-blue-500 to-green-500 rounded-full flex justify-center items-center animate-camera-move transform-gpu"></div>
+            {/* <div className="absolute bottom-1/4 left-1/2 w-20 h-20 bg-gradient-to-tl from-pink-600 to-purple-600 rounded-full flex justify-center items-center animate-mic-bounce transform-gpu"></div> */}
 
             {/* Foreground Content */}
-            <div className="relative z-10 p-12 text-white">
-              <h1 className="text-5xl font-bold text-center">
-                Welcome to the Future of Live Streaming
+            <div className="relative z-10 p-5 text-white text-center">
+              <h1 className="text-6xl  pt-24 font-extrabold text-center z-10 relative">
+                 The Future of Live Streaming
               </h1>
-              <p className="mt-4 text-lg text-center">
-                Scroll down for better experience.
+              {/* <p className="mt-4 text-lg md:text-xl font-semibold tracking-wider text-gray-300">
+                Where creativity meets technology. Stream live like never
+                before!
+              </p> */}
+              <p className="mt-6 text-lg md:text-1xl text-center max-w-2xl mx-auto tracking-wide">
+                StreamForge empowers creators with high-quality live streaming
+                tools, dynamic interactive features, and a supportive community.
+                Elevate your streaming experience and connect with your audience
+                like never before.
               </p>
+              <LottieAnimation />
+             
             </div>
           </div>
 
-          <div className="h-screen bg[24 9.8% 10%] text-white relative overflow-hidden">
+          <div className="h-screen bg[24 9.8% 10% mt-8 text-white relative overflow-hidden">
             <h2 className="text-6xl pt-24 font-extrabold text-center z-10 relative">
               Engage with Your Audience
             </h2>
@@ -252,7 +260,7 @@ const handleGetStartedClick = () => {
           </div>
 
           {/* Monetize Your Stream  */}
-          <div className="h-screen bg[24 9.8% 10%] text-white relative overflow-hidden">
+          <div className="h-screen mt-8 bg[24 9.8% 10%] text-white relative overflow-hidden">
             {/* Title */}
             <h2 className="text-6xl font-extrabold pt-24 text-center text-gray-100">
               Monetize Your Stream
