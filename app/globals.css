@@ -456,6 +456,119 @@ body {
   animation: loader 2s infinite  ease-in-out;
 }
 
+@keyframes text {
+  0% {
+    letter-spacing: 1px;
+    transform: translateX(0px);
+  }
+  40% {
+    letter-spacing: 3px;
+    transform: translateX(40px);
+  }
+  80% {
+    letter-spacing: 1px;
+    transform: translateX(50px);
+  }
+  90% {
+    letter-spacing: 3px;
+    transform: translateX(0px);
+  }
+  100% {
+    letter-spacing: 1px;
+    transform: translateX(0px);
+  }
+}
 
+@keyframes loading {
+  0% {
+    width: 24px;
+    transform: translateX(0px);
+  }
+  40% {
+    width: 100%;
+    transform: translateX(0px);
+  }
+  80% {
+    width: 24px;
+    transform: translateX(96px);
+  }
+  90% {
+    width: 100%;
+    transform: translateX(0px);
+  }
+  100% {
+    width: 24px;
+    transform: translateX(0px);
+  }
+}
+
+@keyframes loading2 {
+  0% {
+    transform: translateX(0px);
+    width: 24px;
+  }
+  40% {
+    transform: translateX(0%);
+    width: 80%;
+  }
+  80% {
+    width: 100%;
+    transform: translateX(0px);
+  }
+  90% {
+    width: 80%;
+    transform: translateX(20px);
+  }
+  100% {
+    transform: translateX(0px);
+    width: 24px;
+  }
+}
+
+/* Home page loader */
+.animate-text {
+  animation: text 3.5s ease-in-out infinite;
+}
+
+.animate-loading {
+  animation: loading 3.5s ease-in-out infinite;
+}
+
+.animate-loading2 {
+  animation: loading2 3.5s ease-in-out infinite;
+}
+
+
+@keyframes particle-float {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  25% { transform: translateY(-10px) translateX(5px); }
+  50% { transform: translateY(10px) translateX(-5px); }
+  75% { transform: translateY(-5px) translateX(-10px); }
+}
+.animate-particle-float {
+  animation: particle-float 12s ease-in-out infinite;
+  position: absolute;
+}
+
+/* Gradient Background Animation */
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 15s ease infinite;
+}
+
+/* Fade-In Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+  animation: fadeIn 1.5s ease-in-out forwards;
+  opacity: 0;
+}
 
 
