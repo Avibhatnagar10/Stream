@@ -4,6 +4,7 @@ import React from "react";
 import { auth } from "../firebaseConfig"; // Import auth
 import { useAuthState } from "react-firebase-hooks/auth"; // Import useAuthState for easy auth state handling
 import { useRouter } from "next/navigation"; // Import useRouter for navigation
+import AnimatedGridPattern  from "../components/Grid Pattern";
 
 const UserProfile = () => {
   const [user] = useAuthState(auth); // Get the current user
@@ -16,16 +17,17 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
+    <div className="flex flex-col items-center justify-center min-h-screen   text-white">
+      <AnimatedGridPattern className="absolute h-[100vh] w-[100vw]"/>
       {user ? (
-        <div className="flex flex-col items-center w-full max-w-lg p-8 rounded-xl shadow-lg bg-gray-800 bg-opacity-90 backdrop-blur-lg transition-all duration-300 transform hover:scale-105">
+        <div className="flex flex-col items-center w-full max-w-lg p-8 rounded-xl shadow-lg bg-gray-800 bg-opacity-50 backdrop-blur-lg transition-all duration-300 transform hover:scale-105">
           {/* Profile Picture */}
           <div className="relative mb-6">
             {user.photoURL ? (
               <img
                 src={user.photoURL} // Display Google profile picture
                 alt="Profile"
-                className="w-32 h-32 rounded-full border-4 border-blue-500 shadow-lg transition-transform duration-300 transform hover:scale-110 hover:border-blue-400"
+                className="w-40 h-40 rounded-full border-4 shadow-lg transition-transform duration-300 transform hover:scale-110 hover:border-blue-400"
               />
             ) : (
               <div className="flex items-center justify-center w-32 h-32 rounded-full border-4 border-dashed border-gray-700 text-gray-500">
@@ -35,7 +37,7 @@ const UserProfile = () => {
           </div>
 
           {/* User Info */}
-          <h1 className="text-3xl font-extrabold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600 animate-pulse">
+          <h1 className="text-4xl font-extrabold mb-2 text-transparent bg-clip-text bg-gradient-to-r bg-yellow-500 ">
             {user.displayName || "User"}
           </h1>
           <p className="text-gray-00 text-md mb-2">Email: {user.email}</p>
