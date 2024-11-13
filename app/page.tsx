@@ -17,6 +17,9 @@ import { useRouter } from "next/navigation";
 import Loader from "./components/Loader";
 import Contact from "./contact/page";
 import LottieAnimation from './components/LottieAnimation';
+import Particles from "./components/Particle";
+
+
 
 const HomePage = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -51,6 +54,8 @@ const HomePage = () => {
     });
     return () => unsubscribe();
   }, []);
+
+  
 
   // Handle the "Get Started" button click
   const handleGetStartedClick = () => {
@@ -101,7 +106,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className={` h-screen overflow-y-auto text-white hide-scrollbar `}>
+    <div className={` h-screen overflow-y-auto text-white hide-scrollbar  `}>
       <Navbar />
       {loading ? (
         <div className="flex items-center justify-center w-full h-full">
@@ -111,6 +116,7 @@ const HomePage = () => {
         <div>
           {/* Centered content */}
           <div className="flex flex-col items-center justify-center h-screen text-center px-4 bg-dark-pattern relative overflow-hidden">
+          <Particles className="absolute inset-0 z-50 h-[100vh] w-[100vw]"/>
             <h1 className="text-5xl font-extrabold mb-8 tracking-wide transition-transform duration-300 transform hover:scale-110">
               <p className="streamforge text-8xl font-extrabold transition-transform duration-300 transform hover:scale-100">
                 <span className="relative title-light">StreamForge</span>
@@ -119,7 +125,7 @@ const HomePage = () => {
                 Your Way, Your Stream, Your Platform
               </span>
             </h1>
-
+            
             <button
               className="bg-white flex items-center justify-center px-8 py-3 border-4 border-blue-600 text-blue-900 rounded-full hover:bg-blue-600 hover:text-white transition duration-300 transform hover:scale-105 shadow-lg shadow-blue-500/50 focus:ring-3 focus:ring-blue-300 focus:outline-none"
               aria-label="Get Started with StreamForge"
@@ -138,8 +144,8 @@ const HomePage = () => {
           {/* Cards Section */}
           {showCards && (
             <div
-              id="cards-section"
-              className="tilt-card shadow-md rounded-lg p-14 flex justify-center space-x-4 w-full mt-10 mb-16 transition-opacity duration-500"
+            id="cards-section"
+            className="tilt-card shadow-md rounded-lg p-14 flex justify-center space-x-4 w-full mt-10 mb-16 transition-opacity duration-500"
             >
               <div className="card bg(0 0% 9%) rounded-lg shadow-lg glow-card w-1/2 h-[70vh] p-8 flex flex-col items-center justify-center">
                 <h2 className="card-title text-4xl mb-4">Record Your Stream</h2>
@@ -154,7 +160,7 @@ const HomePage = () => {
                       "Please sign in to start a recording."
                     )
                   }
-                >
+                  >
                   Record Now
                   <span className="absolute inset-0 m-auto w-12 h-12 rounded-full bg-[rgb(200,226,255)] scale-0 transition-all duration-[0.6s] ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[4] -z-10"></span>
                 </button>
@@ -170,12 +176,12 @@ const HomePage = () => {
                   className="relative mt-4 px-6 py-3 text-lg font-semibold text-[rgb(71,171,248)] border-2 border-[rgb(46,136,254)] rounded-full bg-transparent transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] overflow-hidden group hover:text-[#212121] hover:scale-110 hover:shadow-[0_0_20px_rgba(193,163,98,0.4)] active:scale-100"
                   onClick={() =>
                     handleStreamAction(
-                      "/LivePage",
+                      "LivePage",
                       "Please sign in to start a live stream."
                     )
                   }
-                >
-                  Start Live!
+                  >
+                  Explore!
                   <span className="absolute inset-0 m-auto w-12 h-12 rounded-full bg-[rgb(200,226,255)] scale-0 transition-all duration-[0.6s] ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[4] -z-10"></span>
                 </button>
               </div>
@@ -188,7 +194,7 @@ const HomePage = () => {
             <div className="absolute top-0 left-0 w-48 h-48 bg-blue-500 rounded-full parallax-1 animate-mic-bounce transform-gpu"></div>
             <div className="absolute top-10 right-10 w-40 h-40 bg-indigo-500 rounded-full parallax-2 animate-pulse"></div>
             <div className="absolute bottom-20 left-20 w-48 h-48 bg-pink-500 rounded-full parallax-3 animate-pulse"></div>
-            <div className="absolute bottom-1/6 right-1/4 w-28 h-28 bg-gradient-to-tl from-pink-500 to-orange-500 rounded-full flex justify-center items-center animate-camera-move transform-gpu"></div>
+            <div className="absolute bottom-1/6 right-1/4 w-48 h-48 bg-gradient-to-tl from-pink-500 to-orange-500 rounded-full flex justify-center items-center animate-camera-move transform-gpu"></div>
             <div className="absolute bottom-1 right-28 w-48 h-48 bg-gradient-to-tl from-blue-500 to-green-500 rounded-full flex justify-center items-center animate-camera-move transform-gpu"></div>
             {/* <div className="absolute bottom-1/4 left-1/2 w-20 h-20 bg-gradient-to-tl from-pink-600 to-purple-600 rounded-full flex justify-center items-center animate-mic-bounce transform-gpu"></div> */}
 
@@ -200,7 +206,8 @@ const HomePage = () => {
               {/* <p className="mt-4 text-lg md:text-xl font-semibold tracking-wider text-gray-300">
                 Where creativity meets technology. Stream live like never
                 before!
-              </p> */}
+                </p> */}
+              {/* <Safari/> */}
               <p className="mt-6 text-lg md:text-1xl text-center max-w-2xl mx-auto tracking-wide">
                 StreamForge empowers creators with high-quality live streaming
                 tools, dynamic interactive features, and a supportive community.
@@ -290,20 +297,23 @@ const HomePage = () => {
 
             {/* Moving Elements */}
             <div className="absolute left-10 top-1/2 transform -translate-y-1/2 animate-pulse">
-              <div className="bg-indigo-500 rounded-full w-16 h-16 opacity-75"></div>
+              <div className="bg-indigo-500 rounded-full w-16 h-16 opacity-100"></div>
             </div>
             <div className="absolute right-10 top-1/3 transform -translate-y-1/2 animate-bounce">
-              <div className="bg-teal-500 rounded-full w-10 h-10 opacity-50"></div>
+              <div className="bg-teal-500 rounded-full w-10 h-10 opacity-100"></div>
             </div>
-            <div className="absolute left-1/3 bottom-10 transform -translate-x-1/ animate-pulse">
-              <div className="bg-yellow-400 rounded-full w-14 h-14 opacity-50"></div>
+            <div className="absolute left-1/3 bottom-1/4 transform -translate-x-1/ animate-bounce">
+              <div className="bg-orange-400 rounded-full w-14 h-14 opacity-100"></div>
+            </div>
+            <div className="absolute left-1/3 top-10 translate-x-1/ animate-camera-move transform-gpu">
+              <div className="bg-pink-400 rounded-full w-14 h-14 opacity-100"></div>
             </div>
 
             {/* Camera and Mic Icon */}
             <div className="absolute right-1/4 bottom-1/3 transform rotate-12 animate-pulse">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-16 w-16 text-gray-200 opacity-70"
+                className="h-16 w-16 text-gray-200 opacity-100"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
