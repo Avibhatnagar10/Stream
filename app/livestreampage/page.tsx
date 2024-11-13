@@ -16,11 +16,13 @@ import { useRouter } from "next/navigation";
 // import { SiFacebook, SiYoutube } from "react-icons/si";
 import { SiWhatsapp } from "react-icons/si";
 import { MdOutlineEmail } from "react-icons/md";
-import Livepageloader from "../components/livepageloader";
+import Loader from "../components/Livepageloader";
+import ChatSidebar from "../components/Chatsidebar";
 
 const LiveStreamPage = () => {
   const [loading, setLoading] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const [isStreaming, setIsStreaming] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(
     null
@@ -172,13 +174,39 @@ const LiveStreamPage = () => {
     setStreamHistory(updatedHistory);
   };
 
-  return loading ? (
-    <Livepageloader />
-  ) : (
+  const handleScreenShare = async () => {
+    try {
+      const screenStream = await navigator.mediaDevices.getDisplayMedia({
+        video: true,
+      });
+      // Set the screen stream to video reference
+      if (videoRef.current) {
+        videoRef.current.srcObject = screenStream;
+        videoRef.current.play();
+      }
+      setNotification("Screen sharing started!");
+      setTimeout(() => setNotification(""), 3000);
+    } catch (error) {
+      console.error("Error accessing screen share.", error);
+      setNotification("Error accessing screen share!");
+      setTimeout(() => setNotification(""), 3000);
+    }
+  };
+  const toggleChat = () => {
+    setIsChatOpen((prev) => !prev); // Toggle chat visibility
+  };
+
+  const onStartStream = async () => {
     
+    const roomId = await fetch("/api/create-room");
+    
+  }
+  return loading ? (
+    <Loader />
+  ) : (
     <div className="flex flex-row justify-center h-screen hide-scrollbar overflow-y-${overflow} hsl(240 5.9% 10%) text-white font-sans ">
       {/* Left Navigation Panel */}
-      
+
       <div
         suppressHydrationWarning
         className="flex items-center justify-center h-screen"
@@ -206,20 +234,22 @@ const LiveStreamPage = () => {
       </div>
 
       {/* Main Content */}
+      
       <div className="flex-1 p-6 justify-center items-center overflow-y-${overflow} hide-scrollbar">
         <h1 className="text-4xl font-extrabold mb-8 text-center">
-          Live Stream Dashboard
+          Live Stream 
         </h1>
 
         {/* Centered Video Section */}
+        
         <div className="flex justify-center items-center w-full max-w-4xl mb-5 ">
           <div
             className="relative w-full max-w-5xl border border-black rounded-lg overflow-hidden shadow-xl"
-            style={{ paddingBottom: "56.25%" }}
+            style={{ paddingBottom: "56.25%", }}
           >
             <video
               ref={videoRef}
-              className="absolute top-0 left-0 w-full h-full object-cover rounded-lg"
+              className="absolute top-0 left-30 w-full h-full object-cover rounded-lg"
               autoPlay
               muted
             />
@@ -227,7 +257,11 @@ const LiveStreamPage = () => {
         </div>
 
         {/* Controls */}
-        <div className="flex justify-center space-x-6 mb-10">
+        <div
+          className={`flex justify-center space-x-6 mb-10 transition-all duration-500 ${
+            isChatOpen ? "translate-x-[-5rem]" : ""
+          }`}
+        >
           <button
             onClick={isStreaming ? stopStreaming : startStream}
             className={`px-12 py-5 text-sm uppercase tracking-wider font-medium text-black bg-white border-none rounded-full shadow-lg transition-all duration-300 ease-in-out transform outline-none ${
@@ -260,13 +294,27 @@ const LiveStreamPage = () => {
           >
             {isCameraOn ? <FaVideo /> : <FaVideoSlash />}
           </button>
+          <button
+            onClick={handleScreenShare}
+            className="px-9 py-5 bg-gray-900 hover:bg-gray-800  rounded-full transition-transform transform hover:scale-110 shadow-lg"
+            title="Start Screen Share"
+          >
+            <MdOutlineScreenShare className="text-white text-2xl" />
+          </button>
 
           <button
             onClick={handleDownload}
-            className="relative flex uppercase items-center justify-center overflow-hidden  px-12 py-5 rounded-full bg-blue-600 text-white border-none cursor-pointer transition-transform transform hover:scale-110 shadow-lg group"
+            className="relative flex uppercase items-center overflow-hidden px-12 py-5 rounded-full bg-blue-600 text-white border-none cursor-pointer transition-transform transform hover:scale-110 shadow-lg group"
           >
-            <span className="relative  z-10">Download</span>
+            <span className="relative z-10">Download</span>
             <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-purple-500 to-blue-500 transform scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100 rounded-full" />
+          </button>
+
+          <button
+            onClick={toggleChat}
+            className="px-12 py-5 bg-gray-900 hover:bg-gray-800 text-white rounded-full transition-transform transform hover:scale-110 shadow-lg"
+          >
+            {isChatOpen ? "Close Chat" : "Open Chat"}
           </button>
         </div>
 
@@ -309,6 +357,14 @@ const LiveStreamPage = () => {
             {notification}
           </div>
         )}
+
+        <div
+          className={`fixed top-0 right-0 h-full w-80 bg-gray-800 transform transition-transform duration-500 ease-in-out ${
+            isChatOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <ChatSidebar roomId={1234}/>
+        </div>
 
         {/* Share Popup */}
         {sharePopup?.visible && (
@@ -359,3 +415,4 @@ const LiveStreamPage = () => {
 };
 
 export default LiveStreamPage;
+
